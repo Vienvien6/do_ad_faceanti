@@ -1,3 +1,9 @@
+"""
+# ***************************
+#  code author : Ren
+#  papaer: unsupervised Domain Adaptation for face anti-spoofing
+# ***************************
+"""
 import torch
 import torch.nn as nn
 from torchvision import models
@@ -8,6 +14,7 @@ import torchvision.transforms as transforms
 from torch.autograd import Variable
 import time
 import os
+from visualize import make_dot
 
 #path
 codeDirRoot = ''
@@ -85,9 +92,11 @@ for epoch in range(num_epochs):
     print('Epoch [%d/%d], Loss: %.4f,need time %.4f'
           % (epoch + 1, num_epochs, running_loss / (4000 / batch_size), time.time() - batch_size_start))
 #可视化
-
+g = make_dot(alexnet_model)
+g.view()
 # 保存模型和特征
 saveModelName = os.path.join(codeDirRoot, "model", "alexnet_model.pkl" + "_" + str(num_epochs))
 
 torch.save(alexnet_model.state_dict(), saveModelName)
+
 
